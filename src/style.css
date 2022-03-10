@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500&family=Nunito:wght@300;400;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Fredoka', sans-serif;
+  font-family: 'Nunito', sans-serif;
+}
+
+body {
+  background: #003950;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  line-height: 20px;
+}
+
+
+button, input {
+  outline: none;
+  border: none;
+}

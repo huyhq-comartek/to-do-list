@@ -1,0 +1,109 @@
+.login {
+    border-radius: 10px;
+    margin: 0 auto;
+    width: 800px;
+    overflow: hidden;
+    height: 500px;
+    display: flex;
+}
+
+.login__branch {
+    width: 400px;
+    height: 500px;
+    background: #ff5e57;
+    padding: 30px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    font-size: 20px;
+}
+
+.to-sign-up {
+    background: #ff5e57;
+    color: #fff;
+    margin-top: 25px;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px solid #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s ease;
+}
+
+.login__branch img{ 
+    margin-top: 70px;
+    width: 180px;
+    animation: spinner 10s linear infinite backwards;
+}
+
+.login__branch img:hover {
+    animation-play-state: paused;
+
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.to-sign-up:hover {
+    background: #fff;
+    color: #ff5e57;
+}
+
+.login__form {
+    background: #485460;
+    width: 400px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 40px;
+    color: #fff;
+}
+
+.login__sign-in {
+    margin-bottom: 40px;
+    margin-top: 20px;
+    text-transform: capitalize;
+}
+
+.login__input {
+    width: 100%;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login__input label {
+    text-transform: capitalize;
+    margin-bottom: 5px;
+}
+
+.login__input input {
+    width: 100%;
+    background: #dfe6e9;
+    height: 35px;
+    border-radius: 6px;
+    font-size: 15px;
+    padding: 0px 20px;
+}
+
+.btn__sign-in {
+    margin-top: 80px;
+    width: 120px;
+    border-radius: 6px;
+    background: #000;
+    color: #fff;
+    height: 50px;
+    transition: 0.3s;
+}
+
+.btn__sign-in:hover {
+    background: #fff;
+    color: #000;
+}

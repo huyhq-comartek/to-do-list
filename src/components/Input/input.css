@@ -1,0 +1,37 @@
+.head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.head input,
+.head button {
+    border-radius: 10px;
+}
+
+.head input {
+    background: #eee;
+    color: #000;
+    padding: 13px 20px;
+}
+
+.head button {
+    padding: 10px 30px;
+    background: #008e9f;
+    color: #fff;
+    transition: 0.2s;
+}
+
+.head button:hover {
+    background-color: #006f80;
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {  
+    .head {
+        grid-template-columns: 70% 29%;
+        gap: 1%;
+    }
+}

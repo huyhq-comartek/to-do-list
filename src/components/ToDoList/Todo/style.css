@@ -1,0 +1,41 @@
+.task {
+    width: 100%;
+    height: 49px;
+    padding: 4px 20px 5px 30px;
+    background: #009688;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 1rem;
+    text-transform: capitalize;
+}
+
+.task span {
+    display: block;
+    flex: 1;
+}
+
+.task button {
+    background-color: #009688;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: 0.3s ease;
+}
+
+.task button:hover {
+    background: #222;
+    color: #009688;
+    border-radius: 10px;
+}
+
+.done{
+    opacity: .5;
+}
+
+.done span {
+    text-decoration: line-through;
+    font-style: italic;
+}
+

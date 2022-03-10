@@ -1,0 +1,44 @@
+.task-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0;
+    list-style-type: none;
+    height: auto;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.task-wrapper::-webkit-scrollbar {
+    border-radius: 10px;
+    width: 0.5rem;
+}
+
+.task-wrapper::-webkit-scrollbar-thumb {
+    background-color: #00b3b3;
+    border-radius: 10px;
+    height: 50px;
+}
+
+.task-wrapper::-webkit-scrollbar-track {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
+}
+
+.no-tasks {
+    margin: 0;
+    display: block;
+    font-size: 1rem;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {  
+    .task-wrapper {
+        gap: 20px;
+        padding: 0 50px;
+    }
+}

@@ -1,0 +1,38 @@
+.filter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: .9rem;
+    gap: 5px;
+    margin-bottom: 40px;
+}
+
+.filter button {
+    padding: 10px 30px;
+    border-radius: 10px;
+    font-weight: 500;
+    background: #008e9f;
+    color: #fff;
+    transition: 0.2s;
+}
+
+.filter button:hover {
+    background-color: #006f80;
+}
+
+.active {
+    background: #00e4ff !important;
+    color: #000 !important;
+}
+
+.active:hover {
+    background: #00abc3 !important;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { 
+    .filter {
+        flex-direction: row;
+    }
+}
