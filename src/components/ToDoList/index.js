@@ -1,10 +1,7 @@
-import { useState } from 'react';
 import './style.css';
 import Todo from './Todo';
 
-function ToDoList({allTasks, handleDel, handleEdit, doneTask}) {
-    // use State 
-    const [tasksDone, setTasksDone] = useState([]);
+function ToDoList({allTasks, handleDel, handleEdit, unChecking, checking, isActive}) {
 
     // Del task
     const delOneTask = (index) => {
@@ -16,28 +13,6 @@ function ToDoList({allTasks, handleDel, handleEdit, doneTask}) {
         handleEdit(index, nameTask)
     }
 
-    // Get state of task
-    const getState = (index) => {
-        setTasksDone((prev) => {
-            if(prev.includes(index)) {
-                console.log(prev);
-                prev.forEach((value, key, self) => {
-                    if(value === index) {
-                        const newTasksDone = [...self];
-                        newTasksDone.splice(key, 1);
-                        doneTask(newTasksDone);
-                        return newTasksDone;
-                    }
-                })
-            }
-            if(!prev.includes(index)) {
-                doneTask([...prev, index]);
-                return [...prev, index];
-            }
-
-        })
-    }
-
     // render 
     return (
         <>
@@ -45,13 +20,37 @@ function ToDoList({allTasks, handleDel, handleEdit, doneTask}) {
             <ul className="task-wrapper">
                 {
                     allTasks.map((task, index) =>  {
+                        // completed 
+                        if(isActive === "completed") {
+                            return task.check&&<Todo 
+                                nameTask={task} 
+                                key={index} 
+                                index={index}
+                                delOneTask={delOneTask}
+                                editThisTask={editThisTask}
+                                getState={[checking, unChecking]}
+                            />
+                        }
+
+                        // uncompleted
+                        if (isActive === "uncompleted") {
+                            return !task.check&&<Todo 
+                                nameTask={task} 
+                                key={index} 
+                                index={index}
+                                delOneTask={delOneTask}
+                                editThisTask={editThisTask}
+                                getState={[checking, unChecking]}
+                            />
+                        }
+
                         return <Todo 
                             nameTask={task} 
                             key={index} 
                             index={index}
                             delOneTask={delOneTask}
                             editThisTask={editThisTask}
-                            getState={getState}
+                            getState={[checking, unChecking]}
                         />
                     })
                 }

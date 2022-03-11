@@ -1,18 +1,18 @@
 .login {
-    border-radius: 10px;
     margin: 0 auto;
-    width: 800px;
-    overflow: hidden;
-    height: 500px;
+    width: 100%;
+    height: 520px;
     display: flex;
+    justify-content: center;
+    position: relative;
 }
 
 .login__branch {
     width: 400px;
-    height: 500px;
-    background: #ff5e57;
+    height: 100%;
+    background: #34495e;
     padding: 30px 10px;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     color: #fff;
@@ -20,7 +20,7 @@
 }
 
 .to-sign-up {
-    background: #ff5e57;
+    background: #34495e;
     color: #fff;
     margin-top: 25px;
     width: 100px;
@@ -31,6 +31,11 @@
     justify-content: center;
     align-items: center;
     transition: 0.2s ease;
+}
+
+.to-sign-up:hover {
+    background: #fff;
+    color: #34495e;
 }
 
 .login__branch img{ 
@@ -50,36 +55,38 @@
     }
 }
 
-.to-sign-up:hover {
-    background: #fff;
-    color: #ff5e57;
-}
-
 .login__form {
-    background: #485460;
-    width: 400px;
-    height: 500px;
+    background: #8e44ad;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px 40px;
+    /* padding: 30px 40px; */
+    padding: 30px 10px;
     color: #fff;
+    transition: 0.3s;
+    box-shadow: #002838 0px 10px 20px, #002838 0px 6px 6px;
 }
 
 .login__sign-in {
     margin-bottom: 40px;
     margin-top: 20px;
     text-transform: capitalize;
+    font-size: 32px;
 }
 
 .login__input {
-    width: 100%;
+    width: 95%;
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
+    transition: 0.3s;
 }
 
 .login__input label {
+    display: none;
     text-transform: capitalize;
     margin-bottom: 5px;
 }
@@ -95,15 +102,108 @@
 
 .btn__sign-in {
     margin-top: 80px;
-    width: 120px;
+    /* width: 120px; */
+    width: 95%;
     border-radius: 6px;
     background: #000;
     color: #fff;
     height: 50px;
     transition: 0.3s;
+    font-size: 700;
 }
 
 .btn__sign-in:hover {
-    background: #fff;
+    background: #b2bec3;
+    font-size: 700;
     color: #000;
+}
+
+.sign-in__forget-pass {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.sign-in__forget-pass span {
+    color: #000;
+    font-weight: 700;
+}
+
+.sign-in__forget-pass span:hover {
+    cursor: pointer;
+    color: #17c0eb;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 400px) { 
+    .login__form {
+        border-radius: 10px;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { 
+    .login {
+        width: 70%;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {  
+    .login__form {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* padding: 30px 40px; */
+        padding: 30px 10px;
+        color: #fff;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {  
+    .login {
+        width: 800px;        
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: #002838 0px 10px 20px, #002838 0px 6px 6px;
+    }
+
+    .login__form {
+        width: 400px;
+        border-radius: 0;
+    }
+
+    .login__branch {
+        display: flex;
+    }
+
+    .sign-in__forget-pass {
+        display: none;
+    }
+
+    .btn__sign-in {
+        width: 120px;
+    }
+
+    .login__input label {
+        display: block;
+    }
+}
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  
+
+}
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {  
+
 }

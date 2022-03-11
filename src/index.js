@@ -9,9 +9,9 @@ function Main() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} >
+        <Route path="to-do-list" element={<Login />} >
         </Route>
-        <Route path="to-do-list" element={<App />} />
+        <Route path="/" element={<App />} />
       </Routes>
     </BrowserRouter>
   )

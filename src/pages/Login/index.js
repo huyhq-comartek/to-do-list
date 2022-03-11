@@ -27,7 +27,7 @@ function Login() {
             }
         });
         if(check) {
-            navigate('to-do-list');
+            navigate('/');
         }
         else alert('Ten dang nhap hoac Mat khau khong dung!');
     }
@@ -75,6 +75,11 @@ function Login() {
                     : 
                     <SignIn handleSignIn={handleSignIn}/>
                 }
+
+                <div className="sign-in__forget-pass">
+                    {page ? "Already have an account." : "Don't have an account yet?"} &nbsp;
+                    <span onClick={handleClick}>Tap here</span>
+                </div>
             </form>
 
         </div>

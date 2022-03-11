@@ -30,12 +30,26 @@ function SignIn({handleSignIn}) {
             
             <div className='login__input'>
                 <label htmlFor="username">username</label>    
-                <input value={account.username} onChange={handleChangeUser} type="text" id='username' name='username'></input>
+                <input 
+                    value={account.username} 
+                    onChange={handleChangeUser} 
+                    type="text" 
+                    id='username' 
+                    name='username'
+                    placeholder="Username"
+                />
             </div>
 
             <div className='login__input'>
                 <label htmlFor="password">password</label>    
-                <input value={account.password} onChange={handleChangePass}  type="password" id='password' name='password'></input>
+                <input 
+                    value={account.password} 
+                    onChange={handleChangePass}  
+                    type="password" 
+                    id='password' 
+                    name='password'
+                    placeholder="Password"
+                />
             </div>
 
             <button onClick={handleSubmit} className='btn__sign-in'>

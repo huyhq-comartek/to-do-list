@@ -6,24 +6,32 @@ import { useState } from 'react';
 
 function App() {
   // set state
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    return JSON.parse(localStorage.getItem('tasks')) ?? [];
+  });
   const [isEdit, setEdit] = useState([-1, '']);
-  const [filter, setFilter] = useState('all');
-
+  const [isActive, setIsActive] = useState('all');
+  
   const input = document.querySelector('.head input');
 
   // set name of task
-  const inputRec = (text) => {
+  const getInput = (text) => {
     // set name of new tasks
     if(isEdit[0] === -1 && isEdit[1] === '') {
-      setTasks((prev) => [...prev, text])
+      setTasks((prev) => {
+        const newTask = [...prev, {text, check: false}];
+        localStorage.setItem('tasks', JSON.stringify(newTask));
+        return newTask;
+      })
     }
 
     // edit name of task
     if(isEdit[0] >= 0 && isEdit[1] !== '') {
       setTasks((prev) => {
-        prev.splice(isEdit[0], 1, text);
-        return prev;
+        prev[isEdit[0]]={...prev[isEdit[0]], text};
+        const newTask = [...prev]; 
+        localStorage.setItem('tasks', JSON.stringify(newTask));
+        return newTask;
       })
       setEdit([-1, '']);
     }
@@ -46,25 +54,46 @@ function App() {
     input.focus(); 
   }
 
-  // get  status of list task
-  const getListStatus = (state) => {
-    setFilter(state)
+  const all=()=>{
+    setIsActive("all");
   }
 
-  const filteredTask = (doneTaskArr) => {
-    console.log(doneTaskArr, filter);
+  const completed=()=>{
+    setIsActive("completed");
+  }
+  
+  const uncompleted=()=>{
+    setIsActive("uncompleted");
+  }
+
+  const checking=(index)=>{
+    setTasks((prev)=>{
+      prev[index]={...prev[index], check: true}
+      localStorage.setItem('tasks', JSON.stringify([...prev]));
+      return [...prev];
+    })
+  }
+
+  const unChecking=(index)=>{
+    setTasks((prev)=>{
+      prev[index]={...prev[index], check: false};
+      localStorage.setItem('tasks', JSON.stringify([...prev]));
+      return [...prev];
+    })
   }
 
   // render
   return (
     <div className="App container">
-      <Input getInput={inputRec} nameTask={isEdit[1]}/>
-      <Filter getBtn={getListStatus}/>
+      <Input getInput={getInput} nameTask={isEdit[1]}/>
+      <Filter all={all} completed={completed} uncompleted={uncompleted} isActive={isActive} />
       <ToDoList 
         allTasks={tasks} 
         handleDel={handleDel}
         handleEdit={handleEdit}
-        doneTask={filteredTask}
+        isActive={isActive}
+        checking={checking}
+        unChecking={unChecking}
       />
     </div>
   );

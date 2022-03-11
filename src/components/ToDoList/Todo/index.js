@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './style.css';
 
-function Todo({nameTask, index, delOneTask, editThisTask, getState}) {
-    const [isDone, setIsDone] = useState(false);
+function Todo({nameTask, index, delOneTask, editThisTask, getState: [checking, unChecking]}) {
+    const [isDone, setIsDone] = useState(nameTask.check);
 
     // Del task
     const delTask = () => {
@@ -11,15 +11,15 @@ function Todo({nameTask, index, delOneTask, editThisTask, getState}) {
 
     // Edit task
     const editTask = () => {
-        editThisTask(index, nameTask);
+        editThisTask(index, nameTask.text);
     }
 
     // Tick completed tasked
     const tick = () => {
         setIsDone((prev) => {
+            prev?unChecking(index):checking(index);
             return !prev;
         });
-        getState(index);
     }
 
     return (
@@ -28,7 +28,7 @@ function Todo({nameTask, index, delOneTask, editThisTask, getState}) {
             className={isDone ? 'task done' : 'task'}>
             
             {/* name task */}
-            <span>{nameTask}</span>
+            <span>{nameTask.text}</span>
 
             {/* Task is done */}
             <button onClick={tick}>
