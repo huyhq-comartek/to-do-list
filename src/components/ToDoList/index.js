@@ -1,7 +1,15 @@
 import './style.css';
 import Todo from './Todo';
 
-function ToDoList({allTasks, handleDel, handleEdit, unChecking, checking, isActive}) {
+function ToDoList({
+    allTasks, 
+    handleDel, 
+    handleEdit, 
+    unChecking, 
+    checking, 
+    isActive, 
+    dellAll
+}) {
 
     // Del task
     const delOneTask = (index) => {
@@ -55,6 +63,17 @@ function ToDoList({allTasks, handleDel, handleEdit, unChecking, checking, isActi
                     })
                 }
             </ul>
+
+            <button 
+                className = {
+                    allTasks.length > 2 ?
+                        'del-all' :
+                        'd-none'
+                    }
+                onClick = {dellAll}
+            >
+                Clear All
+            </button>
 
             {/* there is no list  */}
             <p className={allTasks.length === 0 ? "no-tasks" : "d-none"}>

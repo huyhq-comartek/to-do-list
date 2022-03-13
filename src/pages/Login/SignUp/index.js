@@ -3,16 +3,26 @@
 import './style.css';
 import React, { useState } from 'react';
 
-function SignUp({handleSignUp}) {
+function SignUp({handleSignUp, handleClick}) {
 
+    // set State input
     const [account, setAccount] = useState(
         {
             username: '',
             password: '',
         }
     );
+
     const [confirm, setConfirm] = useState('');
 
+    // set state validate
+    const [validate, setValidate] = useState({
+        username: '',
+        password: '',
+        confirm: ''
+    });
+
+    // change change
     const handleChangeUser = (e) => {
         setAccount(prev => ({...prev, username: e.target.value}))
     }
@@ -25,18 +35,43 @@ function SignUp({handleSignUp}) {
         setConfirm(e.target.value)
     }
 
+    // handle submit
     const handleSubmit = (e) => {
+        // prevent submit form
         e.preventDefault();
-        if(account.password === confirm) {
+
+        // set value validate to default 
+        setValidate({
+            username: '',
+            password: '',
+            confirm: ''
+        });
+
+        // check username
+        if(account.username === '') {
+            setValidate((prev) => ({...prev, username: 'This field can not be empty.'}));
+        }
+
+        // check password
+        if(account.password === '') {
+            setValidate((prev) => ({...prev, password: 'This field can not be empty.'}));
+        }
+
+        // check confirm password
+        if(account.password === confirm && confirm !== '') {
             handleSignUp(account);
         }
-        else alert('So sanh mat khau khong trung khop');
+        else setValidate((prev) => ({...prev, confirm: 'Passwords does not match.'}));
+
         return false;
     }
     
     // render 
     return (
-        <>
+        <form 
+            className='login__form'
+            onSubmit={handleSubmit}
+        >
             <h1 className='login__sign-in'>sign Up</h1>
             
             <div className='login__input'>
@@ -49,6 +84,9 @@ function SignUp({handleSignUp}) {
                     name='username'
                     placeholder='Username'
                 />
+                <div className="validate">
+                    {validate.username}
+                </div>
             </div>
 
             <div className='login__input'>
@@ -61,6 +99,9 @@ function SignUp({handleSignUp}) {
                     name='password'
                     placeholder='Password'
                 />
+                <div className="validate">
+                    {validate.password}
+                </div>
             </div>
 
             <div className='login__input'>
@@ -73,12 +114,22 @@ function SignUp({handleSignUp}) {
                     name='password'
                     placeholder='Confirm Password'
                 />
+                <div className="validate">
+                    {validate.confirm}
+                </div>
             </div>
 
-            <button onClick={handleSubmit} className='btn__sign-in'>
+            {/* <ToastContainer /> */}
+
+            <button onSubmit={handleSubmit} className='btn__sign-in'>
                 Sign Up
             </button>
-        </>
+
+            <div className="mobile-tap">
+                Already have an account. &nbsp;
+                <span onClick={handleClick}>Tap here</span>
+            </div>
+        </form>
     )
 }
 

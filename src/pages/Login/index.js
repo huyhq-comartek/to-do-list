@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import { toast } from 'react-toastify';
 
-function Login() {
+function Login({notify}) {
     let navigate = useNavigate();
 
     // set state
@@ -15,6 +16,8 @@ function Login() {
         const accountStorage = JSON.parse(localStorage.getItem('Accounts'));
         return accountStorage ?? [];
     });
+
+    const [notCorrectAccount, setNotCorrectAcc] = useState(false);
 
     // handle submit 
     const handleSignIn = (account) => {
@@ -27,9 +30,16 @@ function Login() {
             }
         });
         if(check) {
+            notify('Login successfully', {position: toast.POSITION.TOP_RIGHT}, '');
             navigate('/');
         }
-        else alert('Ten dang nhap hoac Mat khau khong dung!');
+        else notify(
+          'Your username or password is not right', 
+          {
+            position: toast.POSITION.TOP_RIGHT, 
+            autoClose: 3000
+          }, 
+          'error');
     }
 
     // handle submit 
@@ -39,7 +49,16 @@ function Login() {
             localStorage.setItem('Accounts', JSON.stringify(newAccounts));
             return newAccounts;
         });
+
         setPage(!page);
+
+        notify(
+            'Your account has been successfully created', 
+            {
+              position: toast.POSITION.TOP_RIGHT, 
+              autoClose: 3000
+            }, 
+            'success');;
     }
 
     const handleClick = () => {
@@ -49,7 +68,8 @@ function Login() {
     // render 
     return (
         <div className='login'>
-            {/* login branch  */}
+           
+            {/* login decorate part  */}
             <div className='login__branch'>
                 <span className='ask'>
                     {page ? 'Already have account' : 'Is this your first time to ToDoList?'}
@@ -63,24 +83,19 @@ function Login() {
                 <img src='https://www.zenesys.com/Zenesys/media/Images/reactJS/reactJS-logo.png'/>
             </div>
 
-            {/* form login */}
-            <form 
-                className='login__form' 
-                // onSubmit={page ? handleSignUp : handleSignIn}
-            >
-                {
-                    page 
-                    ? 
-                    <SignUp handleSignUp={handleSignUp}/> 
-                    : 
-                    <SignIn handleSignIn={handleSignIn}/>
-                }
-
-                <div className="sign-in__forget-pass">
-                    {page ? "Already have an account." : "Don't have an account yet?"} &nbsp;
-                    <span onClick={handleClick}>Tap here</span>
-                </div>
-            </form>
+            {/* login || signUp  form*/}
+            {
+                page ?
+                    <SignUp 
+                        handleSignUp={handleSignUp} 
+                        handleClick={handleClick}
+                    /> : 
+                    <SignIn 
+                        handleSignIn={handleSignIn} 
+                        handleClick={handleClick}
+                        notCorrectAccount={notCorrectAccount}
+                    />
+            }
 
         </div>
     )

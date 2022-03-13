@@ -1,7 +1,8 @@
 import './input.css';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
-function Input({getInput, nameTask}) {
+function Input({getInput, nameTask, notify}) {
   
   // set state
   const [txt, setTxt] = useState('');
@@ -11,7 +12,13 @@ function Input({getInput, nameTask}) {
     e.preventDefault();
 
     if(txt === '') {
-      alert('Please enter your task first!');
+      notify(
+        'Please fill in the blank first!', 
+        {
+          position: toast.POSITION.TOP_RIGHT, 
+          autoClose: 3000
+        }, 
+        'warning');
     } 
     
     else {
