@@ -1,6 +1,19 @@
+import React, { memo } from 'react';
 import './filter.css'
 
-function Filter({all, completed, uncompleted, isActive}) {
+interface Props {
+    all: () => void,
+    completed: () => void,
+    unCompleted: () => void,
+    isActive: string
+}
+
+function Filter({
+    all, 
+    completed, 
+    unCompleted, 
+    isActive
+}: Props) {
 
     return (
         <div className="filter">
@@ -14,10 +27,10 @@ function Filter({all, completed, uncompleted, isActive}) {
             >Completed</button>
             <button 
                 className={isActive === 'uncompleted' ? 'active' : ''}
-                onClick={uncompleted}
+                onClick={unCompleted}
             >Uncompleted</button>
         </div>
     )
 }
 
-export default Filter;
+export default memo(Filter);

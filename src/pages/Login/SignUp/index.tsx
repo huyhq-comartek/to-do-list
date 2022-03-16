@@ -3,7 +3,15 @@
 import './style.css';
 import React, { useState } from 'react';
 
-function SignUp({handleSignUp, handleClick}) {
+interface Props {
+    handleSignUp: (account: {
+        username: string,
+        password: string
+    }) => void,
+    handleClick: () => void
+}
+
+function SignUp({handleSignUp, handleClick}: Props) {
 
     // set State input
     const [account, setAccount] = useState(
@@ -23,20 +31,20 @@ function SignUp({handleSignUp, handleClick}) {
     });
 
     // change change
-    const handleChangeUser = (e) => {
+    const handleChangeUser = (e: any) => {
         setAccount(prev => ({...prev, username: e.target.value}))
     }
 
-    const handleChangePass = (e) => {
+    const handleChangePass = (e: any) => {
         setAccount(prev => ({...prev, password: e.target.value}))
     }
 
-    const handleChangeCoPass = (e) => {
+    const handleChangeCoPass = (e: any) => {
         setConfirm(e.target.value)
     }
 
     // handle submit
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         // prevent submit form
         e.preventDefault();
 

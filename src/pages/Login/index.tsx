@@ -6,23 +6,31 @@ import { useState } from 'react';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import { toast } from 'react-toastify';
+import React from 'react';
 
-function Login({notify}) {
+interface Props {
+    notify: (text: string, props: {}, type: string) => void
+}
+
+export interface IUser {
+    username: string;
+    password: string
+}
+
+function Login({notify}: Props) {
     let navigate = useNavigate();
 
     // set state
     const [page, setPage] = useState(false);
     const [accounts, setAccounts] = useState(() => {
-        const accountStorage = JSON.parse(localStorage.getItem('Accounts'));
+        const accountStorage = JSON.parse(localStorage.getItem('Accounts') || '');
         return accountStorage ?? [];
     });
 
-    const [notCorrectAccount, setNotCorrectAcc] = useState(false);
-
     // handle submit 
-    const handleSignIn = (account) => {
+    const handleSignIn = (account:IUser) => {
         let check = false;
-        accounts.forEach(e => {
+        accounts.forEach((e:any) => {
             const passCheck = e.password === account.password;
             const userCheck = e.username === account.username;
             if(passCheck && userCheck) {
@@ -43,8 +51,14 @@ function Login({notify}) {
     }
 
     // handle submit 
-    const handleSignUp = (account) => {
-        setAccounts((prev) => {
+    const handleSignUp = (account: {
+        username: string,
+        password: string
+    }) => {
+        setAccounts((prev: {
+            username: string,
+            password: string
+        }[]) => {
             const newAccounts = [...prev, account];
             localStorage.setItem('Accounts', JSON.stringify(newAccounts));
             return newAccounts;
@@ -83,7 +97,6 @@ function Login({notify}) {
                 <img src='https://www.zenesys.com/Zenesys/media/Images/reactJS/reactJS-logo.png'/>
             </div>
 
-            {/* login || signUp  form*/}
             {
                 page ?
                     <SignUp 
@@ -93,7 +106,6 @@ function Login({notify}) {
                     <SignIn 
                         handleSignIn={handleSignIn} 
                         handleClick={handleClick}
-                        notCorrectAccount={notCorrectAccount}
                     />
             }
 

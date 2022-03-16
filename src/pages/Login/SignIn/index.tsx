@@ -1,9 +1,18 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/heading-has-content */
 
+import React from "react";
 import { useState } from "react";
 
-function SignIn({handleSignIn, handleClick, notCorrectAccount}) {
+interface Props {
+    handleSignIn: (account: {
+        username: string,
+        password: string
+    }) => void,
+    handleClick: () => void,
+}
+
+function SignIn({handleSignIn, handleClick}: Props) {
     // set state input
     const [account, setAccount] = useState({
         username: '',
@@ -17,16 +26,16 @@ function SignIn({handleSignIn, handleClick, notCorrectAccount}) {
     });
 
     // handle change
-    const handleChangeUser = (e) => {
+    const handleChangeUser = (e: any) => {
         setAccount(prev => ({...prev, username: e.target.value}));
     }
 
-    const handleChangePass = (e) => {
+    const handleChangePass = (e: any) => {
         setAccount(prev => ({...prev, password: e.target.value}));
     }
 
     // handle submit
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         // prevent submit form
         e.preventDefault();
 

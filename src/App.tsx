@@ -4,22 +4,38 @@ import Filter from './components/Filter';
 import ToDoList from './components/ToDoList';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import React from 'react';
+import { useCallback } from 'react';
 
-function App({notify}) {
+interface Props {
+    notify: (text: string, props: {}, type: string) => void
+}
+interface IEditTask{
+  index: number;
+  taskChanged: string
+}
+
+function App({notify}: Props) {
   // set state
   const [tasks, setTasks] = useState(() => {
-    return JSON.parse(localStorage.getItem('tasks')) ?? [];
+    return JSON.parse(localStorage.getItem('tasks') || '[]');
   });
-  const [isEdit, setEdit] = useState([-1, '']);
+  const [isEdit, setEdit] = useState<IEditTask>({
+    index: -1,
+    taskChanged: ''
+  });
   const [isActive, setIsActive] = useState('all');
   
-  const input = document.querySelector('.head input');
+  const input: HTMLElement = document.querySelector('.head input')!;
 
   // set name of task
-  const getInput = (text) => {
+  const getInput = useCallback((text: string) => {
     // set name of new tasks
-    if(isEdit[0] === -1 && isEdit[1] === '') {
-      setTasks((prev) => {
+    if(isEdit.index === -1 && isEdit.taskChanged === '') {
+      setTasks((prev: {
+        text: string,
+        check: boolean
+      }[]) => {
         const newTask = [...prev, {text, check: false}];
         localStorage.setItem('tasks', JSON.stringify(newTask));
         return newTask;
@@ -35,15 +51,21 @@ function App({notify}) {
     }
 
     // edit name of task
-    if(isEdit[0] >= 0 && isEdit[1] !== '') {
-      setTasks((prev) => {
-        prev[isEdit[0]]={...prev[isEdit[0]], text};
+    if(isEdit.index >= 0 && isEdit.taskChanged !== '') {
+      setTasks((prev: {
+        text: string,
+        check: boolean
+      }[]) => {
+        prev[isEdit.index] = {...prev[isEdit.index], text};
         const newTask = [...prev]; 
         localStorage.setItem('tasks', JSON.stringify(newTask));
         return newTask;
       })
 
-      setEdit([-1, '']);
+      setEdit({
+        index: -1,
+        taskChanged: ''
+      });
 
       notify(
         'Update successfully', 
@@ -53,11 +75,11 @@ function App({notify}) {
         }, 
         'success');
     }
-  }
+  }, [notify, isEdit.index, isEdit.taskChanged])
 
   // Del task
-  const handleDel = (index) => {
-    setTasks((prev) => {
+  const handleDel = (index: number) => {
+    setTasks((prev: number[]) => {
       const newTask = [...prev];
       newTask.splice(index, 1);
       localStorage.setItem('tasks', JSON.stringify(newTask));
@@ -89,35 +111,47 @@ function App({notify}) {
   }
 
   // Edit task 
-  const handleEdit = (index, nameTask) => {
+  const handleEdit = (index: number, nameTask: string) => {
     if(index >= 0) {
-      setEdit([index, nameTask]);
+      setEdit({
+        index,
+        taskChanged: nameTask
+      });
     }
     input.focus(); 
   }
 
-  const all = () => {
+  const all = useCallback(() => {
     setIsActive("all");
-  }
+  }, [])
 
-  const completed = () => {
+  const completed = useCallback(() => {
     setIsActive("completed");
-  }
+  }, [])
   
-  const uncompleted = () => {
+  const uncompleted = useCallback(() => {
     setIsActive("uncompleted");
-  }
+  }, [])
 
-  const checking=(index) => {
-    setTasks((prev) => {
+  const checking=(index: number) => {
+    console.log(index);
+    
+    setTasks((prev: {
+      text: string,
+      check: boolean
+    }[]) => {
       prev[index] = {...prev[index], check: true}
       localStorage.setItem('tasks', JSON.stringify([...prev]));
       return [...prev];
     })
   }
 
-  const unChecking=(index) => {
-    setTasks((prev) => {
+  const unChecking=(index: number) => {
+    console.log(index);
+    setTasks((prev: {
+      text: string,
+      check: boolean
+    }[]) => {
       prev[index] = {...prev[index], check: false};
       localStorage.setItem('tasks', JSON.stringify([...prev]));
       return [...prev];
@@ -129,14 +163,14 @@ function App({notify}) {
     <div className="App container">
       <Input 
         getInput={getInput} 
-        nameTask={isEdit[1]}
+        nameTask={isEdit.taskChanged}
         notify={notify}
       />
 
       <Filter 
         all={all} 
         completed={completed} 
-        uncompleted={uncompleted} 
+        unCompleted={uncompleted} 
         isActive={isActive} 
       />
 

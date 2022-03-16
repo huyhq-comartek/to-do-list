@@ -1,14 +1,20 @@
 import './input.css';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { toast } from 'react-toastify';
 
-function Input({getInput, nameTask, notify}) {
+interface Props {
+  getInput: (text: string) => void,
+  nameTask: string,
+  notify: (text: string, props: {}, type: string) => void
+}
+
+function Input({getInput, nameTask, notify}: Props) {
   
   // set state
   const [txt, setTxt] = useState('');
 
   // handle submit
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     if(txt === '') {
@@ -27,18 +33,19 @@ function Input({getInput, nameTask, notify}) {
       // alert('Add Successfully!');
     }
   }
+  console.log('re-render');
+  
 
   // render Input
   return (
-    <form className="head" onSubmit={handleSubmit}>
+    <form className="head" onSubmit={e => handleSubmit(e)}>
         <input 
           type="text" 
           placeholder="New Task"
-          // onFocus={() => { setTxt(nameTask) }}
           value={txt}
-          onChange={(e) => { setTxt(e.target.value) }}
+          onChange={e => { setTxt(e.target.value) }}
         />
-        <button onSubmit={handleSubmit} type="submit">
+        <button onSubmit={e => handleSubmit(e)} type="submit">
           { nameTask === '' ? "Add" : "Edit" }  
         </button>
     </form>
@@ -46,4 +53,4 @@ function Input({getInput, nameTask, notify}) {
   );
 }
 
-export default Input;
+export default memo(Input);

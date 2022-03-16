@@ -9,11 +9,25 @@ import 'react-toastify/dist/ReactToastify.css'
 
 toast.configure();
 
-const notify = (text, props, type) => {
+const notify = (text: string, props: {}, type: string) => {
   if (type === '' || type === 'undefined') {
     toast(text, props);
-  } else {
-    toast[type](text, props);
+  }
+
+  if (type === 'success') {
+    toast.success(text, props);
+  }
+
+  if (type === 'warning') {
+    toast.warning(text, props);
+  }
+
+  if (type === 'info') {
+    toast.info(text, props);
+  }
+
+  if (type === 'error') {
+    toast.error(text, props);
   }
 }
 
